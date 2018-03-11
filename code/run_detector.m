@@ -51,7 +51,7 @@ temp_size = feature_params.template_size;
 temp_cells = temp_size / cell_size;
 D_temp_dimension = (temp_cells)^2 * 31;
 
-score_threshold = 0.9;
+score_threshold = 0.75;
 scales = [1, 0.9, 0.75, 0.6, 0.5, 0.4, 0.25, 0.1];
 
 for i = 1:length(test_scenes)
