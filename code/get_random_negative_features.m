@@ -45,7 +45,7 @@ features_neg = zeros(loop_num, (feature_params.template_size / feature_params.ho
 image_files = image_files( randperm(num_images) );
 
 for i = 1:loop_num
-    fprintf('Mining random negatives from %s\n', image_files(i).name)
+%     fprintf('Mining random negatives from %s\n', image_files(i).name)
     
     img = imread( fullfile( non_face_scn_path, image_files(i).name ));
     
@@ -59,3 +59,4 @@ for i = 1:loop_num
     
     features_neg( i,: ) = image_hog(:);
 end
+fprintf('Mining random negatives with %d negatives.\n', loop_num);

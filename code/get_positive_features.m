@@ -38,7 +38,7 @@ features_pos = zeros(num_images, (feature_params.template_size / feature_params.
 % randomize the order of files to remove bias from alphabetic
 % image_files = image_files( randperm(num_images) );
 for i = 1:num_images
-    fprintf('get positive features from %s\n', image_files(i).name)
+%     fprintf('get positive features from %s\n', image_files(i).name)
     
     img = imread( fullfile( train_path_pos, image_files(i).name ));
     
@@ -51,5 +51,5 @@ for i = 1:num_images
     
     features_pos( i,: ) = image_hog(:);
 end
-
+fprintf('get positive features with %d features.\n', num_images)
 % All feature bits are between 0 to 0.4

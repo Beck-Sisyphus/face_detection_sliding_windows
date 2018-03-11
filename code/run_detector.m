@@ -46,6 +46,12 @@ bboxes = zeros(0,4);
 confidences = zeros(0,1);
 image_ids = cell(0,1);
 
+cell_size = feature_params.hog_cell_size;
+temp_size = feature_params.template_size;
+temp_cells = temp_size / cell_size;
+D_temp_dimension = (temp_cells)^2 * 31;
+
+score_threshold = 0.9;
 for i = 1:length(test_scenes)
       
     fprintf('Detecting faces in %s\n', test_scenes(i).name)
@@ -55,13 +61,42 @@ for i = 1:length(test_scenes)
         img = rgb2gray(img);
     end
     
+    scales = [1, 0];
     %You can delete all of this below.
     % Let's create 15 random detections per image
-    cur_x_min = rand(15,1) * size(img,2);
-    cur_y_min = rand(15,1) * size(img,1);
-    cur_bboxes = [cur_x_min, cur_y_min, cur_x_min + rand(15,1) * 50, cur_y_min + rand(15,1) * 50];
-    cur_confidences = rand(15,1) * 4 - 2; %confidences in the range [-2 2]
-    cur_image_ids(1:15,1) = {test_scenes(i).name};
+%     cur_x_min = rand(15,1) * size(img,2);
+%     cur_y_min = rand(15,1) * size(img,1);
+%     cur_bboxes = [cur_x_min, cur_y_min, cur_x_min + rand(15,1) * 50, cur_y_min + rand(15,1) * 50];
+%     cur_confidences = rand(15,1) * 4 - 2; %confidences in the range [-2 2]
+%     cur_image_ids(1:15,1) = {test_scenes(i).name};
+    scale = scales(1);
+    img_scaled = imresize(img, scale);
+    [height_scaled, width_scaled] = size(img_scaled);
+    
+    test_features = vl_hog(img_scaled, cell_size);
+    x_img_cell = floor(width_scaled / cell_size);
+    y_img_cell = floor(height_scaled / cell_size);
+    
+    num_window_x = x_img_cell - temp_cells + 1;
+    num_window_y = y_img_cell - temp_cells + 1;
+    
+    % reshape each features from the test to a row vector
+    window_feats = zeros( num_window_x * num_window_y, D_temp_dimension);
+    for x = 1:num_window_x
+        for y = 1:num_window_y
+            test_window = test_features( y:( y+temp_cells-1 ), x:( x+temp_cells-1), :);
+            window_feats( (x-1) * num_window_y + y, :) = reshape(test_window, 1, D_temp_dimension);
+        end
+    end
+    scores = window_feats * w + b;
+    indices = find(scores > score_threshold);
+    cur_confidences = scores(indices);
+    
+    detected_x = floor( indices ./ num_window_y );
+    detected_y = mod( indices, num_window_y ) - 1;
+    cur_bboxes = [  cell_size *  detected_x + 1,            cell_size *  detected_y + 1, ...
+                    cell_size * (detected_x + temp_cells),  cell_size * (detected_y + temp_cells)]./ scale;
+    cur_image_ids = repmat( {test_scenes(i).name}, size(indices,1), 1);
     
     %non_max_supr_bbox can actually get somewhat slow with thousands of
     %initial detections. You could pre-filter the detections by confidence,
