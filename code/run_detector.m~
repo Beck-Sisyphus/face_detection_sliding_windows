@@ -65,7 +65,7 @@ for i = 1:length(test_scenes)
     
     cur_bboxes = zeros(0,4);
     cur_confidences = zeros(0,1);
-    cur_image_ids = zeros(0,1);
+    cur_image_ids = zero(0,1);
     
     for scale = scales
         
@@ -98,8 +98,7 @@ for i = 1:length(test_scenes)
         cur_image_ids_scaled = repmat( {test_scenes(i).name}, size(indices,1), 1);
         
         cur_bboxes      = [cur_bboxes;      cur_bboxes_scaled];
-        cur_confidences = [cur_confidences; cur_confidences_scaled];
-        cur_image_ids   = [cur_image_ids;   cur_image_ids_scaled];
+        cur_confidences = [cur_confidences; cur_confid
     end
     %non_max_supr_bbox can actually get somewhat slow with thousands of
     %initial detections. You could pre-filter the detections by confidence,
