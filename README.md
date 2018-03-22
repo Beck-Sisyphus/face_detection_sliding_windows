@@ -38,7 +38,7 @@ The parameters chosen are:
 
 5. number of orientation in the HoG feature: 9
 
-## Final average precision ranges from 0.810 to 
+## Final average precision ranges from 0.743 to 0.810 
 
 ## Extra test scenes
 The extra test scenes are much challenging in detection, as false positive rate increase dramatically.
