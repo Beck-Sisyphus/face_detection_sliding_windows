@@ -28,12 +28,16 @@ The parameters chosen are:
     
 | threshold | average percision |
 | :---   |  ---:  |
-| 0.6 | |
-| 0.7 | |
-| 0.75 | |
-| 0.8 | |
-| 0.9 | |
+| 0.6 | 0.695 ~ 0.707 |
+| 0.7 | 0.706 ~ 0.738 |
+| 0.75 |0.715 ~ 0.721 |
+| 0.8 | 0.705 ~ 0.733 |
+| 0.9 | 0.715 |
 
 4. scales: 1, 0.9, 0.75, 0.6, 0.5, 0.4, 0.25, 0.1.
 
 5. number of orientation in the HoG feature: 9
+
+
+## Extra test scenes
+The extra test scenes are much challenging in detection, as false positive rate increase dramatically.
