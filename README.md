@@ -14,14 +14,18 @@ The parameters chosen are:
 2. lambda for svm: 0.0001;
     The regularization parameter determines the tolerance for miss-classification. It changes the decision boundary for a non-separable dataset, and larger the lambda less smaller the decision boundary. For 6 x 6 cells, the default 0.0001 has the best performance.
     
-    | lambda | average percision |
-    | :---   |  ---:  |
-    | 0.00001| 0.715 |
-    | 0.0001 | 0.733 |
-    | 0.001 | 0.727 |
-    | 0.01 | 0.725 |
-    | 0.1 | 0.606 |
+| lambda | average percision |
+| :---   |  ---:  |
+| 0.00001| 0.715 |
+| 0.0001 | 0.733 |
+| 0.001 | 0.727 |
+| 0.01 | 0.725 |
+| 0.1 | 0.606 |
     
+| Left-aligned | Center-aligned | Right-aligned |
+| :---         |     :---:      |          ---: |
+| git status   | git status     | git status    |
+| git diff     | git diff       | git diff      |
 
 
 3. score threshold: 0.75;
