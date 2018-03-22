@@ -34,7 +34,7 @@ The parameters chosen are:
 | 0.8 | 0.705 ~ 0.733 |
 | 0.9 | 0.715 ~ 0.746 |
 
-4. scales: 1, 0.9, 0.75, 0.6, 0.5, 0.4, 0.25, 0.1.
+4. scales: [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2];
 
 5. number of orientation in the HoG feature: 9
 
