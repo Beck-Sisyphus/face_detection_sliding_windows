@@ -36,7 +36,7 @@
 % See http://www.vlfeat.org/matlab/matlab.html for VLFeat Matlab documentation
 % This should work on 32 and 64 bit versions of Windows, MacOS, and Linux
 close all
-clear
+clear; clc
 run('~/Developer/References/vlfeat/toolbox/vl_setup')
 
 [~,~,~] = mkdir('visualizations');
@@ -44,15 +44,18 @@ run('~/Developer/References/vlfeat/toolbox/vl_setup')
 data_path = '../data/'; %change if you want to work with a network copy
 train_path_pos = fullfile(data_path, 'caltech_faces/Caltech_CropFaces'); %Positive training examples. 36x36 head crops
 non_face_scn_path = fullfile(data_path, 'train_non_face_scenes'); %We can mine random or hard negatives from here
-test_scn_path = fullfile(data_path,'test_scenes/test_jpg'); %CMU+MIT test scenes
+% test_scn_path = fullfile(data_path,'test_scenes/test_jpg'); %CMU+MIT test scenes
 % test_scn_path = fullfile(data_path,'extra_test_scenes'); %Bonus scenes
-label_path = fullfile(data_path,'test_scenes/ground_truth_bboxes.txt'); %the ground truth face locations in the test set
+% label_path = fullfile(data_path,'test_scenes/ground_truth_bboxes.txt'); %the ground truth face locations in the test set
+
+test_scn_path = fullfile(data_path,'bonus/test_jpg');
+label_path = fullfile(data_path,'bonus/ground_truth_bboxes.txt'); %the ground truth face locations in the test set
 
 %The faces are 36x36 pixels, which works fine as a template size. You could
 %add other fields to this struct if you want to modify HoG default
 %parameters such as the number of orientations, but that does not help
 %performance in our limited test.
-feature_params = struct('template_size', 36, 'hog_cell_size', 6);
+feature_params = struct('template_size', 36, 'hog_cell_size', 4);
 
 
 %% Step 1. Load positive training crops and random negative examples
@@ -75,7 +78,7 @@ features_neg = get_random_negative_features( non_face_scn_path, feature_params, 
 %YOU CODE classifier training. Make sure the outputs are 'w' and 'b'.
 % w = rand((feature_params.template_size / feature_params.hog_cell_size)^2 * 31,1); %placeholder, delete
 % b = rand(1); %placeholder, delete
-lambda = 0.0001;
+lambda = 0.001;
 
 svm_x = [features_pos', features_neg'];
 svm_y = [ ones( size(features_pos, 1), 1); -1*ones( size(features_neg, 1), 1)];

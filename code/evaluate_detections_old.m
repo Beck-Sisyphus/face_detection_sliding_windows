@@ -87,26 +87,6 @@ rec=cum_tp/npos;
 prec=cum_tp./(cum_fp+cum_tp);
 
 ap=VOCap(rec,prec);
-% auc=VOCap(1-prec,rec);     % for area under auc curve
-
-% Besides AP, we also compare your results on the ROC curve 
-% by checking locations FP = 0, 10, 100
-fp_num = [0, 10, 100];
-np = length(fp_num);
-recall_at = zeros(np, 1);       % corresponding recall given different FP
-for j = 1:np
-    idx = find(cum_fp == fp_num(j));
-    if ~isempty(idx)
-        recall_at(j) = rec(idx(end));
-    end
-end
-
-fprintf(' - - - - - - - - - - - \n');
-fprintf('Average Precision:\t\t %.3f\n', ap);
-for j = 1:np
-    fprintf('Detection Rate (FP = %d):\t %.3f\n', fp_num(j), recall_at(j));
-end
-fprintf(' - - - - - - - - - - - \n');
 
 if draw
     % plot precision/recall
@@ -128,41 +108,18 @@ if draw
     
     figure(13)
     plot(cum_fp,rec,'-')
-%     plot(1-prec, rec, '-')
-    axis([0 500 0 1])
-%     axis([0 1 0 1])
+    axis([0 300 0 1])
     grid;
     xlabel 'False positives'
     ylabel 'Number of correct detections (recall)'
-    title(sprintf('Recall(FP=0): %.3f, Recall(FP=10): %.3f, Recall(FP=100): %.3f', ...
-        recall_at(1), recall_at(2), recall_at(3)));
-    pause(0.1)
-%     roc_image = frame2im(getframe(13));
-%     imwrite(roc_image, 'visualizations/roc.png')
+    title('This plot is meant to match Figure 6 in Viola Jones');
 end
-
-%% Save results
-if ~exist('bonus_output', 'dir')
-    mkdir('bonus_output');
-end
-
-out_file_pr = fopen('bonus_output/pr.txt', 'w+');
-out_file_roc = fopen('bonus_output/roc.txt', 'w+');
-out_file_dr = fopen('bonus_output/dr.txt', 'w+');
-
-for i = 1:size(rec, 1)
-    fprintf(out_file_pr, sprintf('%.4f %.4f\n', rec(i), prec(i)));
-    fprintf(out_file_roc, sprintf('%d %.4f\n', cum_fp(i), rec(i)));
-end
-for j = 1:np
-    fprintf(out_file_dr, sprintf('Detection Rate (FP = %d):\t %.3f\n', fp_num(j), recall_at(j)));
-end
-fclose(out_file_pr);
-fclose(out_file_roc);
-fclose(out_file_dr);
 
 %% Re-sort return variables so that they are in the order of the input bboxes
 reverse_map(si) = 1:nd;
 tp = tp(reverse_map);
 fp = fp(reverse_map);
 duplicate_detections = duplicate_detections(reverse_map);
+
+
+
