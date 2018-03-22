@@ -23,7 +23,7 @@ The parameters chosen are:
 | 0.1 | 0.606 |
 
 
-3. score threshold: 0.9;
+3. score threshold: 0.75;
     The score threshold for each feature after running the linear classifier. When lambda = 0.0001, cell size is 6 x 6, the results are:
     
 | threshold | average percision |
@@ -38,7 +38,7 @@ The parameters chosen are:
 
 5. number of orientation in the HoG feature: 9
 
-## Final average precision ranges from 0.743 to 0.822
+## Final average precision ranges from 0.743 to 0.858
 
 ## Extra test scenes
 The extra test scenes are much challenging in detection, as false positive rate increase dramatically.
