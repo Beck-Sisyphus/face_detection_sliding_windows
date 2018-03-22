@@ -12,23 +12,28 @@ The parameters chosen are:
     The cell size affects the detection rate and run speed. The smaller size cell will gives a better detection, yet the run time O(N^3) increases. With 6 x 6 cell size Average Precision is 0.733, and with 4 x 4 cells, the AP increases to 0.798.
     
 2. lambda for svm: 0.0001;
-    The regularization parameter determines the tolerance for miss-classification. It changes the decision boundary for a non-separable dataset, and larger the lambda less smaller the decision boundary. For 6 x 6 cells, the default 0.0001 has the best performance.
+    The regularization parameter determines the tolerance for miss-classification. It changes the decision boundary for a non-separable dataset, and larger the lambda less smaller the decision boundary. For 6 x 6 cells, the default 0.0001 has the best performance. With threshold 0.75, cell size 6 x 6, the tested average percision results are:
     
 | lambda | average percision |
 | :---   |  ---:  |
 | 0.00001| 0.715 |
-| 0.0001 | 0.733 |
-| 0.001 | 0.727 |
-| 0.01 | 0.725 |
+| 0.0001 | 0.726 ~ 0.736 |
+| 0.001 | 0.727 ~ 0.755 | 
+| 0.01 | 0.707 ~ 0.725 | 
 | 0.1 | 0.606 |
-    
-| Left-aligned | Center-aligned | Right-aligned |
-| :---         |     :---:      |          ---: |
-| git status   | git status     | git status    |
-| git diff     | git diff       | git diff      |
 
 
 3. score threshold: 0.75;
-    The score threshold 
+    The score threshold for each feature after running the linear classifier. When lambda = 0.0001, cell size is 6 x 6, the results are:
+    
+| threshold | average percision |
+| :---   |  ---:  |
+| 0.6 | |
+| 0.7 | |
+| 0.75 | |
+| 0.8 | |
+| 0.9 | |
 
 4. scales: 1, 0.9, 0.75, 0.6, 0.5, 0.4, 0.25, 0.1.
+
+5. number of orientation in the HoG feature: 9
